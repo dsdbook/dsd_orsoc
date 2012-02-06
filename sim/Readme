@@ -1,0 +1,2 @@
+cd rtl_sim
+./run_vsim

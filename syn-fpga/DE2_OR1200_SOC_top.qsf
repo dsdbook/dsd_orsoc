@@ -1,0 +1,537 @@
+# Copyright (C) 1991-2006 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+
+
+# The default values for assignments are stored in the file
+#		cyc_or12_mini_top_assignment_defaults.qdf
+# If this file doesn't exist, and for assignments not listed, see file
+#		assignment_defaults.qdf
+
+# Altera recommends that you do not modify this file. This
+# file is updated automatically by the Quartus II software
+# and any changes you make may be lost or overwritten.
+
+
+set_global_assignment -name DEVICE EP2C70F896C6
+set_global_assignment -name FAMILY "Cyclone II"
+set_global_assignment -name TOP_LEVEL_ENTITY or1200_soc_top
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 6.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "06:48:46  JUNE 20, 2007"
+set_global_assignment -name LAST_QUARTUS_VERSION "9.1 SP2"
+
+#50MHz local oscillator
+set_global_assignment -name FMAX_REQUIREMENT "20 ns" -section_id clk
+set_global_assignment -name DUTY_CYCLE 50 -section_id clk
+
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+
+
+
+set_location_assignment PIN_AD15 -to clk
+#use CPU_RST button
+set_location_assignment PIN_D21 -to uart_srx
+set_location_assignment PIN_E21 -to uart_stx
+set_location_assignment PIN_R22 -to uart1_srx
+set_location_assignment PIN_P30 -to uart1_stx
+set_location_assignment PIN_R23 -to uart2_srx
+set_location_assignment PIN_P29 -to uart2_stx
+set_location_assignment PIN_P23 -to uart3_srx
+set_location_assignment PIN_N29 -to uart3_stx
+
+# Mictor0
+# Mictor1
+# Mictor2
+# Mictor3
+# Mictor4
+
+#NET "jtag_tms"  LOC = "D7"  | IOSTANDARD = LVCMOS33 | PULLDOWN ;
+#NET "jtag_tdi"  LOC = "C7"  | IOSTANDARD = LVCMOS33 | PULLDOWN ;
+#NET "jtag_tdo"  LOC = "F8"  | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8 ;
+#NET "jtag_tck"  LOC = "E8"  | IOSTANDARD = LVCMOS33 | PULLDOWN ;
+#NET "jtag_trst" LOC = "H13" | IOSTANDARD = LVCMOS33 | PULLDOWN ;
+
+
+
+
+set_global_assignment -name ENABLE_SIGNALTAP OFF
+set_global_assignment -name USE_SIGNALTAP_FILE stp1.stp
+
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 896
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 6
+set_global_assignment -name SMART_RECOMPILE ON
+set_global_assignment -name EDA_DESIGN_ENTRY_SYNTHESIS_TOOL "<None>"
+set_global_assignment -name EDA_RUN_TOOL_AUTOMATICALLY OFF -section_id eda_design_synthesis
+set_global_assignment -name EDA_INPUT_DATA_FORMAT EDIF -section_id eda_design_synthesis
+set_global_assignment -name EDA_RESYNTHESIS_TOOL "<None>"
+set_global_assignment -name EDA_NETLIST_WRITER_OUTPUT_DIR amplify -section_id eda_palace
+set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_palace
+set_location_assignment PIN_AJ29 -to flash_we_n
+set_location_assignment PIN_AH28 -to flash_reset_n
+set_location_assignment PIN_AG29 -to flash_oe_n
+set_location_assignment PIN_AG28 -to flash_ce_n
+set_location_assignment PIN_AF24 -to flash_addr[0]
+set_location_assignment PIN_AG24 -to flash_addr[1]
+set_location_assignment PIN_AE23 -to flash_addr[2]
+set_location_assignment PIN_AG23 -to flash_addr[3]
+set_location_assignment PIN_AF23 -to flash_addr[4]
+set_location_assignment PIN_AG22 -to flash_addr[5]
+set_location_assignment PIN_AH22 -to flash_addr[6]
+set_location_assignment PIN_AF22 -to flash_addr[7]
+set_location_assignment PIN_AH27 -to flash_addr[8]
+set_location_assignment PIN_AJ27 -to flash_addr[9]
+set_location_assignment PIN_AH26 -to flash_addr[10]
+set_location_assignment PIN_AJ26 -to flash_addr[11]
+set_location_assignment PIN_AK26 -to flash_addr[12]
+set_location_assignment PIN_AJ25 -to flash_addr[13]
+set_location_assignment PIN_AK25 -to flash_addr[14]
+set_location_assignment PIN_AH24 -to flash_addr[15]
+set_location_assignment PIN_AG25 -to flash_addr[16]
+set_location_assignment PIN_AF21 -to flash_addr[17]
+set_location_assignment PIN_AD21 -to flash_addr[18]
+set_location_assignment PIN_AK28 -to flash_addr[19]
+set_location_assignment PIN_AJ28 -to flash_addr[20]
+set_location_assignment PIN_AE20 -to flash_addr[21]
+set_location_assignment PIN_AE24 -to flash_dq[15]
+set_location_assignment PIN_AA30 -to flash_dq[14]
+set_location_assignment PIN_AB30 -to flash_dq[13]
+set_location_assignment PIN_AC30 -to flash_dq[12]
+set_location_assignment PIN_AC28 -to flash_dq[11]
+set_location_assignment PIN_AD29 -to flash_dq[10]
+set_location_assignment PIN_AE29 -to flash_dq[9]
+set_location_assignment PIN_AF30 -to flash_dq[8]
+set_location_assignment PIN_Y28 -to flash_dq[7]
+set_location_assignment PIN_AA29 -to flash_dq[6]
+set_location_assignment PIN_AB29 -to flash_dq[5]
+set_location_assignment PIN_AC29 -to flash_dq[4]
+set_location_assignment PIN_AD30 -to flash_dq[3]
+set_location_assignment PIN_AE30 -to flash_dq[2]
+set_location_assignment PIN_AE28 -to flash_dq[1]
+set_location_assignment PIN_AF29 -to flash_dq[0]
+set_location_assignment PIN_AH29 -to flash_wp_n
+set_global_assignment -name CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name RESERVE_ASDO_AFTER_CONFIGURATION "AS INPUT TRI-STATED"
+set_location_assignment PIN_G27 -to jtag_tck
+set_location_assignment PIN_G28 -to jtag_tdi
+set_location_assignment PIN_L24 -to jtag_tdo
+set_location_assignment PIN_L25 -to jtag_tms
+set_global_assignment -name IGNORE_VERILOG_INITIAL_CONSTRUCTS ON
+set_location_assignment PIN_D27 -to oENET_CLK
+set_location_assignment PIN_B27 -to oENET_CMD
+set_location_assignment PIN_C28 -to oENET_CS_N
+set_location_assignment PIN_A28 -to oENET_IOR_N
+set_location_assignment PIN_B28 -to oENET_IOW_N
+set_location_assignment PIN_B29 -to oENET_RESET_N
+set_location_assignment PIN_C27 -to iENET_INT
+set_location_assignment PIN_A23 -to ENET_D[0]
+set_location_assignment PIN_C22 -to ENET_D[1]
+set_location_assignment PIN_B22 -to ENET_D[2]
+set_location_assignment PIN_A22 -to ENET_D[3]
+set_location_assignment PIN_B21 -to ENET_D[4]
+set_location_assignment PIN_A21 -to ENET_D[5]
+set_location_assignment PIN_B20 -to ENET_D[6]
+set_location_assignment PIN_A20 -to ENET_D[7]
+set_location_assignment PIN_B26 -to ENET_D[8]
+set_location_assignment PIN_A26 -to ENET_D[9]
+set_location_assignment PIN_B25 -to ENET_D[10]
+set_location_assignment PIN_A25 -to ENET_D[11]
+set_location_assignment PIN_C24 -to ENET_D[12]
+set_location_assignment PIN_B24 -to ENET_D[13]
+set_location_assignment PIN_A24 -to ENET_D[14]
+set_location_assignment PIN_B23 -to ENET_D[15]
+set_global_assignment -name INCREMENTAL_COMPILATION FULL_INCREMENTAL_COMPILATION
+set_global_assignment -name SAVE_DISK_SPACE OFF
+set_global_assignment -name FLOW_DISABLE_ASSEMBLER OFF
+set_global_assignment -name MISC_FILE "D:/haier/DE2_OR1200_SOC/syn/DE2_OR1200_SOC_top.dpf"
+set_global_assignment -name EDA_SIMULATION_TOOL "<None>"
+set_global_assignment -name EDA_MAP_ILLEGAL_CHARACTERS OFF -section_id eda_simulation
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT NONE -section_id eda_simulation
+set_global_assignment -name EDA_FORMAL_VERIFICATION_TOOL "<None>"
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
+set_global_assignment -name SAFE_STATE_MACHINE ON
+set_global_assignment -name AUTO_RESOURCE_SHARING ON
+set_global_assignment -name ALLOW_ANY_RAM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_ANY_ROM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ENABLE_DA_RULE "C101, C102, C103, C104, C105, C106, R101, R102, R103, R104, R105, T101, T102, A101, A102, A103, A104, A105, A106, A107, A108, A109, A110, S101, S102, S103, S104, D101, D102, D103"
+set_global_assignment -name DISABLE_DA_RULE "H101, H102, M101, M102, M103, M104, M105"
+set_global_assignment -name ENABLE_DRC_SETTINGS OFF
+set_global_assignment -name TIMEQUEST_DO_REPORT_TIMING ON
+set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name EDA_NATIVELINK_GENERATE_SCRIPT_ONLY ON -section_id eda_simulation
+set_global_assignment -name EDA_MAINTAIN_DESIGN_HIERARCHY ON -section_id eda_simulation
+set_global_assignment -name ADV_NETLIST_OPT_SYNTH_WYSIWYG_REMAP ON
+set_global_assignment -name ADV_NETLIST_OPT_SYNTH_GATE_RETIME ON
+set_global_assignment -name ENABLE_LOGIC_ANALYZER_INTERFACE OFF
+set_global_assignment -name MISC_FILE "D:/or1200/DE2_OR1200_SOC_haier/syn/DE2_OR1200_SOC_top.dpf"
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+set_location_assignment PIN_Y29 -to flash_byte_n
+set_global_assignment -name MISC_FILE "D:/DE2_OR1200_SOC_16bit/syn/DE2_OR1200_SOC_top.dpf"
+set_location_assignment PIN_AH30 -to flash_RY
+set_global_assignment -name MISC_FILE "D:/or1200/DE2_OR1200_SOC_16bit/syn_arith/DE2_OR1200_SOC_top.dpf"
+set_location_assignment PIN_AF18 -to oSRAM_WE_N
+set_location_assignment PIN_AD18 -to oSRAM_OE_N
+set_location_assignment PIN_AG18 -to oSRAM_GW_N
+set_location_assignment PIN_AD7 -to oSRAM_CLK
+set_location_assignment PIN_AD22 -to oSRAM_CE3_N
+set_location_assignment PIN_AG19 -to oSRAM_CE2
+set_location_assignment PIN_AH19 -to oSRAM_CE1_N
+set_location_assignment PIN_AH20 -to oSRAM_BE_N[3]
+set_location_assignment PIN_AD20 -to oSRAM_BE_N[2]
+set_location_assignment PIN_AC20 -to oSRAM_BE_N[1]
+set_location_assignment PIN_AC21 -to oSRAM_BE_N[0]
+set_location_assignment PIN_AD16 -to oSRAM_ADV_N
+set_location_assignment PIN_AC18 -to oSRAM_ADSP_N
+set_location_assignment PIN_AG17 -to oSRAM_ADSC_N
+set_location_assignment PIN_AG8 -to oSRAM_A[0]
+set_location_assignment PIN_AF8 -to oSRAM_A[1]
+set_location_assignment PIN_AH7 -to oSRAM_A[2]
+set_location_assignment PIN_AG7 -to oSRAM_A[3]
+set_location_assignment PIN_AG6 -to oSRAM_A[4]
+set_location_assignment PIN_AG5 -to oSRAM_A[5]
+set_location_assignment PIN_AE12 -to oSRAM_A[6]
+set_location_assignment PIN_AG12 -to oSRAM_A[7]
+set_location_assignment PIN_AD13 -to oSRAM_A[8]
+set_location_assignment PIN_AE13 -to oSRAM_A[9]
+set_location_assignment PIN_AF14 -to oSRAM_A[10]
+set_location_assignment PIN_AG14 -to oSRAM_A[11]
+set_location_assignment PIN_AE15 -to oSRAM_A[12]
+set_location_assignment PIN_AF15 -to oSRAM_A[13]
+set_location_assignment PIN_AC16 -to oSRAM_A[14]
+set_location_assignment PIN_AF20 -to oSRAM_A[15]
+set_location_assignment PIN_AG20 -to oSRAM_A[16]
+set_location_assignment PIN_AE11 -to oSRAM_A[17]
+set_location_assignment PIN_AF11 -to oSRAM_A[18]
+set_location_assignment PIN_AH10 -to SRAM_DQ[0]
+set_location_assignment PIN_AJ10 -to SRAM_DQ[1]
+set_location_assignment PIN_AK10 -to SRAM_DQ[2]
+set_location_assignment PIN_AJ11 -to SRAM_DQ[3]
+set_location_assignment PIN_AK11 -to SRAM_DQ[4]
+set_location_assignment PIN_AH12 -to SRAM_DQ[5]
+set_location_assignment PIN_AJ12 -to SRAM_DQ[6]
+set_location_assignment PIN_AH16 -to SRAM_DQ[7]
+set_location_assignment PIN_AK17 -to SRAM_DQ[8]
+set_location_assignment PIN_AJ17 -to SRAM_DQ[9]
+set_location_assignment PIN_AH17 -to SRAM_DQ[10]
+set_location_assignment PIN_AJ18 -to SRAM_DQ[11]
+set_location_assignment PIN_AH18 -to SRAM_DQ[12]
+set_location_assignment PIN_AK19 -to SRAM_DQ[13]
+set_location_assignment PIN_AJ19 -to SRAM_DQ[14]
+set_location_assignment PIN_AK23 -to SRAM_DQ[15]
+set_location_assignment PIN_AJ20 -to SRAM_DQ[16]
+set_location_assignment PIN_AK21 -to SRAM_DQ[17]
+set_location_assignment PIN_AJ21 -to SRAM_DQ[18]
+set_location_assignment PIN_AK22 -to SRAM_DQ[19]
+set_location_assignment PIN_AJ22 -to SRAM_DQ[20]
+set_location_assignment PIN_AH15 -to SRAM_DQ[21]
+set_location_assignment PIN_AJ15 -to SRAM_DQ[22]
+set_location_assignment PIN_AJ16 -to SRAM_DQ[23]
+set_location_assignment PIN_AK14 -to SRAM_DQ[24]
+set_location_assignment PIN_AJ14 -to SRAM_DQ[25]
+set_location_assignment PIN_AJ13 -to SRAM_DQ[26]
+set_location_assignment PIN_AH13 -to SRAM_DQ[27]
+set_location_assignment PIN_AK12 -to SRAM_DQ[28]
+set_location_assignment PIN_AK7 -to SRAM_DQ[29]
+set_location_assignment PIN_AJ8 -to SRAM_DQ[30]
+set_location_assignment PIN_AK8 -to SRAM_DQ[31]
+set_location_assignment PIN_AJ9 -to SRAM_DPA[3]
+set_location_assignment PIN_AK20 -to SRAM_DPA[2]
+set_location_assignment PIN_AJ23 -to SRAM_DPA[1]
+set_location_assignment PIN_AK9 -to SRAM_DPA[0]
+set_global_assignment -name MISC_FILE "D:/DE2_OR1200_SOC_SSRAM/syn_arith_ssram/DE2_OR1200_SOC_top.dpf"
+set_global_assignment -name HDL_MESSAGE_LEVEL LEVEL2
+set_global_assignment -name MISC_FILE "H:/DE2_OR1200_SOC_SSRAM/syn_CRC_ssram/DE2_OR1200_SOC_top.dpf"
+set_global_assignment -name MISC_FILE "D:/workspace/DE2_OR1200_SOC/syn_CRC_ssram/DE2_OR1200_SOC_top.dpf"
+set_global_assignment -name MISC_FILE "D:/work/DE2_OR1200_SOC/syn/DE2_OR1200_SOC_top.dpf"
+set_location_assignment PIN_T28 -to vga_rst
+set_location_assignment PIN_H19 -to vsync_pad_o
+set_location_assignment PIN_D19 -to b_pad_o[9]
+set_location_assignment PIN_C19 -to b_pad_o[8]
+set_location_assignment PIN_A19 -to b_pad_o[7]
+set_location_assignment PIN_B19 -to b_pad_o[6]
+set_location_assignment PIN_B18 -to b_pad_o[5]
+set_location_assignment PIN_C18 -to b_pad_o[4]
+set_location_assignment PIN_B17 -to b_pad_o[3]
+set_location_assignment PIN_A17 -to b_pad_o[2]
+set_location_assignment PIN_C16 -to b_pad_o[1]
+set_location_assignment PIN_B16 -to b_pad_o[0]
+set_location_assignment PIN_C15 -to blank_pad_o
+set_location_assignment PIN_D24 -to clk_p_o
+set_location_assignment PIN_B15 -to csync_pad_o
+set_location_assignment PIN_A14 -to g_pad_o[9]
+set_location_assignment PIN_B14 -to g_pad_o[8]
+set_location_assignment PIN_B13 -to g_pad_o[7]
+set_location_assignment PIN_C13 -to g_pad_o[6]
+set_location_assignment PIN_A12 -to g_pad_o[5]
+set_location_assignment PIN_B12 -to g_pad_o[4]
+set_location_assignment PIN_C12 -to g_pad_o[3]
+set_location_assignment PIN_A11 -to g_pad_o[2]
+set_location_assignment PIN_B11 -to g_pad_o[1]
+set_location_assignment PIN_A10 -to g_pad_o[0]
+set_location_assignment PIN_J19 -to hsync_pad_o
+set_location_assignment PIN_G20 -to r_pad_o[9]
+set_location_assignment PIN_E20 -to r_pad_o[8]
+set_location_assignment PIN_F20 -to r_pad_o[7]
+set_location_assignment PIN_H20 -to r_pad_o[6]
+set_location_assignment PIN_G21 -to r_pad_o[5]
+set_location_assignment PIN_H21 -to r_pad_o[4]
+set_location_assignment PIN_D22 -to r_pad_o[3]
+set_location_assignment PIN_E22 -to r_pad_o[2]
+set_location_assignment PIN_E23 -to r_pad_o[1]
+set_location_assignment PIN_D23 -to r_pad_o[0]
+set_location_assignment PIN_Y7 -to sdram0_addr[12]
+set_location_assignment PIN_Y4 -to sdram0_addr[11]
+set_location_assignment PIN_T4 -to sdram0_addr[10]
+set_location_assignment PIN_W8 -to sdram0_addr[9]
+set_location_assignment PIN_W7 -to sdram0_addr[8]
+set_location_assignment PIN_W4 -to sdram0_addr[7]
+set_location_assignment PIN_V8 -to sdram0_addr[6]
+set_location_assignment PIN_V7 -to sdram0_addr[5]
+set_location_assignment PIN_U7 -to sdram0_addr[4]
+set_location_assignment PIN_U6 -to sdram0_addr[3]
+set_location_assignment PIN_U4 -to sdram0_addr[2]
+set_location_assignment PIN_T6 -to sdram0_addr[1]
+set_location_assignment PIN_T5 -to sdram0_addr[0]
+set_location_assignment PIN_T8 -to sdram0_ba[1]
+set_location_assignment PIN_T7 -to sdram0_ba[0]
+set_location_assignment PIN_N8 -to sdram0_cas_n
+set_location_assignment PIN_L10 -to sdram0_cke
+set_location_assignment PIN_G5 -to sdram0_clk
+set_location_assignment PIN_P9 -to sdram0_cs_n
+set_location_assignment PIN_AB2 -to sdram0_dq[15]
+set_location_assignment PIN_AB1 -to sdram0_dq[14]
+set_location_assignment PIN_AA3 -to sdram0_dq[13]
+set_location_assignment PIN_AA2 -to sdram0_dq[12]
+set_location_assignment PIN_AA1 -to sdram0_dq[11]
+set_location_assignment PIN_Y3 -to sdram0_dq[10]
+set_location_assignment PIN_Y2 -to sdram0_dq[9]
+set_location_assignment PIN_Y1 -to sdram0_dq[8]
+set_location_assignment PIN_W3 -to sdram0_dq[7]
+set_location_assignment PIN_W2 -to sdram0_dq[6]
+set_location_assignment PIN_W1 -to sdram0_dq[5]
+set_location_assignment PIN_V3 -to sdram0_dq[4]
+set_location_assignment PIN_V2 -to sdram0_dq[3]
+set_location_assignment PIN_U3 -to sdram0_dq[2]
+set_location_assignment PIN_U2 -to sdram0_dq[1]
+set_location_assignment PIN_U1 -to sdram0_dq[0]
+set_location_assignment PIN_U8 -to sdram0_dqm[1]
+set_location_assignment PIN_M10 -to sdram0_dqm[0]
+set_location_assignment PIN_N9 -to sdram0_ras_n
+set_location_assignment PIN_M9 -to sdram0_we_n
+set_location_assignment PIN_AF4 -to sdram1_addr[12]
+set_location_assignment PIN_AE4 -to sdram1_addr[11]
+set_location_assignment PIN_Y8 -to sdram1_addr[10]
+set_location_assignment PIN_AC7 -to sdram1_addr[9]
+set_location_assignment PIN_AD4 -to sdram1_addr[8]
+set_location_assignment PIN_AC6 -to sdram1_addr[7]
+set_location_assignment PIN_AC5 -to sdram1_addr[6]
+set_location_assignment PIN_AC4 -to sdram1_addr[5]
+set_location_assignment PIN_AB7 -to sdram1_addr[4]
+set_location_assignment PIN_AB5 -to sdram1_addr[3]
+set_location_assignment PIN_AA6 -to sdram1_addr[2]
+set_location_assignment PIN_AA5 -to sdram1_addr[1]
+set_location_assignment PIN_AA4 -to sdram1_addr[0]
+set_location_assignment PIN_AA10 -to sdram1_ba[1]
+set_location_assignment PIN_AA9 -to sdram1_ba[0]
+set_location_assignment PIN_W10 -to sdram1_cas_n
+set_location_assignment PIN_AA8 -to sdram1_cke
+set_location_assignment PIN_AD6 -to sdram1_clk
+set_location_assignment PIN_Y10 -to sdram1_cs_n
+set_location_assignment PIN_AH2 -to sdram1_dq[15]
+set_location_assignment PIN_AH1 -to sdram1_dq[14]
+set_location_assignment PIN_AG3 -to sdram1_dq[13]
+set_location_assignment PIN_AG2 -to sdram1_dq[12]
+set_location_assignment PIN_AF3 -to sdram1_dq[11]
+set_location_assignment PIN_AF2 -to sdram1_dq[10]
+set_location_assignment PIN_AF1 -to sdram1_dq[9]
+set_location_assignment PIN_AE3 -to sdram1_dq[8]
+set_location_assignment PIN_AE2 -to sdram1_dq[7]
+set_location_assignment PIN_AE1 -to sdram1_dq[6]
+set_location_assignment PIN_AD3 -to sdram1_dq[5]
+set_location_assignment PIN_AD2 -to sdram1_dq[4]
+set_location_assignment PIN_AD1 -to sdram1_dq[3]
+set_location_assignment PIN_AC3 -to sdram1_dq[2]
+set_location_assignment PIN_AC2 -to sdram1_dq[1]
+set_location_assignment PIN_AC1 -to sdram1_dq[0]
+set_location_assignment PIN_AB6 -to sdram1_dqm[1]
+set_location_assignment PIN_V9 -to sdram1_dqm[0]
+set_location_assignment PIN_Y9 -to sdram1_ras_n
+set_location_assignment PIN_W9 -to sdram1_we_n
+
+set_location_assignment PIN_AJ6 -to gpio_out[0]
+set_location_assignment PIN_AK5 -to gpio_out[1]
+set_location_assignment PIN_AJ5 -to gpio_out[2]
+set_location_assignment PIN_AJ4 -to gpio_out[3]
+set_location_assignment PIN_AK3 -to gpio_out[4]
+set_location_assignment PIN_AH4 -to gpio_out[5]
+set_location_assignment PIN_AJ3 -to gpio_out[6]
+set_location_assignment PIN_AJ2 -to gpio_out[7]
+set_location_assignment PIN_AH3 -to gpio_out[8]
+set_location_assignment PIN_AD14 -to gpio_out[9]
+set_location_assignment PIN_AC13 -to gpio_out[10]
+set_location_assignment PIN_AB13 -to gpio_out[11]
+set_location_assignment PIN_AC12 -to gpio_out[12]
+set_location_assignment PIN_AB12 -to gpio_out[13]
+set_location_assignment PIN_AC11 -to gpio_out[14]
+set_location_assignment PIN_AD9 -to gpio_out[15]
+
+
+
+set_location_assignment PIN_AA23 -to gpio_in[0]
+set_location_assignment PIN_AB26 -to gpio_in[1]
+set_location_assignment PIN_W5 -to gpio_in[10]
+set_location_assignment PIN_V10 -to gpio_in[11]
+set_location_assignment PIN_U9 -to gpio_in[12]
+set_location_assignment PIN_T9 -to gpio_in[13]
+set_location_assignment PIN_L5 -to gpio_in[14]
+set_location_assignment PIN_L4 -to gpio_in[15]
+set_location_assignment PIN_AB25 -to gpio_in[2]
+set_location_assignment PIN_AC27 -to gpio_in[3]
+set_location_assignment PIN_AC26 -to gpio_in[4]
+set_location_assignment PIN_AC24 -to gpio_in[5]
+set_location_assignment PIN_AC23 -to gpio_in[6]
+set_location_assignment PIN_AD25 -to gpio_in[7]
+set_location_assignment PIN_AD24 -to gpio_in[8]
+set_location_assignment PIN_AE27 -to gpio_in[9]
+
+
+
+set_parameter -name CYCLONEII_SAFE_WRITE RESTRUCTURE
+set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_EFFORT EXTRA
+set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_DUPLICATION ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC_FOR_AREA ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_MAP_LOGIC_TO_MEMORY_FOR_AREA ON
+set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name MISC_FILE "N:/RTA_projs/orsoc-asic/syn-fpga/DE2_OR1200_SOC_top.dpf"
+set_location_assignment PIN_AJ7 -to boot_flash
+set_location_assignment PIN_L7 -to rst
+set_location_assignment PIN_AB25 -to adbg_rst
+set_location_assignment PIN_AC26 -to asic_test
+set_location_assignment PIN_AC27 -to jtag_trst
+set_global_assignment -name MISC_FILE "N:/RTA_projs/orsoc-cur/syn-fpga/DE2_OR1200_SOC_top.dpf"
+set_location_assignment PIN_T26 -to sd_clk
+set_location_assignment PIN_Y30 -to sd_cs_n
+set_location_assignment PIN_W29 -to sd_data_i
+set_location_assignment PIN_W28 -to sd_data_o
+set_global_assignment -name MISC_FILE "/home/user_home/dxzhang/orsoc/asic/syn-fpga/DE2_OR1200_SOC_top.dpf"
+
+set_global_assignment -name MISC_FILE "D:/RTA_projs/orsoc-cur/syn-fpga/DE2_OR1200_SOC_top.dpf"
+
+
+
+set_location_assignment PIN_R26 -to spi_clk
+set_location_assignment PIN_P28 -to spi_in
+set_location_assignment PIN_P27 -to spi_out
+set_location_assignment PIN_M24 -to spi_cs_n[0]
+set_location_assignment PIN_L29 -to spi_cs_n[1]
+set_location_assignment PIN_L30 -to spi_cs_n[2]
+set_location_assignment PIN_N24 -to gpio_d[31]
+set_global_assignment -name MISC_FILE "D:/RTA_projs/orsoc-vjtag/syn-fpga/DE2_OR1200_SOC_top.dpf"
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_instance_assignment -name CLOCK_SETTINGS clk -to clk
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR OFF -to rst
+set_global_assignment -name VERILOG_FILE ../rtl/on_chip_ram/on_chip_ram_top.v
+set_global_assignment -name QIP_FILE ../rtl/on_chip_ram/on_chip_ram.qip
+set_global_assignment -name QIP_FILE ../rtl/pll/pll.qip
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_32_bw.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_fpu.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dpram.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_arb.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_defines.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_master_if.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_msel.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_pri_dec.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_pri_enc.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_rf.v
+set_global_assignment -name VERILOG_FILE ../rtl/wb_conmax/wb_conmax_slave_if.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/timescale.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_alu.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_amultp2_32x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_cfgr.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_cpu.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_ctrl.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dc_fsm.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dc_ram.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dc_tag.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dc_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_defines.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dmmu_tlb.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dmmu_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dpram_32x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_dpram_256x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_du.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_except.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_freeze.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_genpc.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_gmultp2_32x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_ic_fsm.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_ic_ram.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_ic_tag.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_ic_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_if.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_immu_tlb.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_immu_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_iwb_biu.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_lsu.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_mem2reg.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_mult_mac.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_operandmuxes.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_pic.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_pm.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_qmem_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_reg2mem.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_rf.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_rfram_generic.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_sb.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_sb_fifo.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_32x24.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_64x14.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_64x22.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_64x24.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_128x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_256x21.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_512x20.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_1024x8.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_1024x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_1024x32_bw.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_2048x8.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_2048x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_spram_2048x32_bw.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_sprs.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_tpram_32x32.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_tt.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_wb_biu.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_wbmux.v
+set_global_assignment -name VERILOG_FILE ../rtl/or1200/or1200_xcv_ram32x8d.v
+set_global_assignment -name VERILOG_FILE ../rtl/gpio/timescale.v
+set_global_assignment -name VERILOG_FILE ../rtl/gpio/gpio_defines.v
+set_global_assignment -name VERILOG_FILE ../rtl/gpio/gpio_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/top/or1200_soc_top.v
+set_global_assignment -name VERILOG_FILE ../rtl/top/or1200_soc_top_defines.v
+set_global_assignment -name VERILOG_FILE ../rtl/top/timescale.v
+set_global_assignment -name MISC_FILE "F:/dsd/mini_soc/syn-fpga/DE2_OR1200_SOC_top.dpf"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -1,0 +1,9 @@
+dxzhang@ustc.edu
+Please use or32-elf-gcc 4.5.1 or above
+otherwise, check reset.S:
+ 
+        l.movhi r2,hi(main)
+        l.ori   r2,r2,lo(main)
+
+or32-elf-gcc 4.5.1 : use "main"
+or32-elf-gcc 4.2.1 : use "_main"

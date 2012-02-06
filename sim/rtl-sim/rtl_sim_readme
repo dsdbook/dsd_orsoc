@@ -1,0 +1,13 @@
+!!Notice!! : NO timing check 
+
+check run_vsim shell script, modify "NOVAS_INST_DIR":
+export NOVAS_INST_DIR=/opt/spring/verdi
+
+
+(1) Modelsim/Questa
+Simulation : target --> FPGA 
+	ln -sf vlog.arg.fpga  vlog.args
+	./run_vsim
+
+(2) debug using verdi :
+ 	./run_verdi

@@ -1,0 +1,7 @@
+dxzhang@ustc.edu
+FPGA:
+define: TARGET_FPGA
+when FPGA implementation with Altera Virtual Jtag , define: ALTERA_VIRTUAL_JTAG
+when FPGA implementation with generic tap , define: GENERIC_TAP
+
+
