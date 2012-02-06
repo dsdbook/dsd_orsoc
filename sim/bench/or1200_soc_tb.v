@@ -10,6 +10,9 @@ reg     rst;
 // PLL
 reg     clk;
 
+wire    uart_srx;
+wire    uart_stx;
+
 reg [31:0] gpio_in;
 wire [31:0] gpio_out;
 // -----------------------------------
@@ -18,7 +21,10 @@ wire [31:0] gpio_out;
 or1200_soc_top i_or1200_soc_top(
 	.clk    	(	clk ),
 	.rst		(	rst		),
-	
+//uart
+        .uart_srx      (        uart_srx        ),
+        .uart_stx      (        uart_stx        ),
+
 	.gpio_in	(	gpio_in		),
 	.gpio_out	(	gpio_out	)
 );
@@ -71,6 +77,25 @@ initial begin
 	$fsdbDumpvars;
 end
 `endif
+
+reg     baudclk;
+//add by dxzhang 20081122,uart_monitor
+//baudclk   : 1000000000/(16*baud_rate), when baud_rate=9600, is 6510
+//`define BAUDCLK_HALF_PERIOD 3255
+// baud_rate =115200, 271
+`define BAUDCLK_HALF_PERIOD 271
+
+initial begin
+        baudclk    =  0;
+        forever # `BAUDCLK_HALF_PERIOD baudclk =  ~baudclk;
+end
+
+uart_rx uart_rx (
+        .reset (                rst     ),
+        .rxclk (                baudclk ),
+        .rx_in (                uart_stx)
+);
+
 
 or1200_monitor or1200_monitor();
 

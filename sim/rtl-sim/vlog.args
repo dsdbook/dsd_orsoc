@@ -25,6 +25,7 @@
 -y ../../rtl/wb_conmax
 -y ../../rtl/pll
 -y ../../rtl/on_chip_ram
+-y ../../rtl/uart16550
 
 //
 // Test bench files
@@ -34,12 +35,28 @@
 ../bench/or1200_soc_tb.v
 ../bench/or1200_monitor.v
 
+../bench/uart_rx.v
 //
 // RTL files (gpio)
 //
 +incdir+../../rtl/gpio
 ../../rtl/gpio/gpio_top.v
 ../../rtl/gpio/gpio_defines.v
+
+//
+// RTL files (uart16550)
+//
++incdir+../../rtl/uart16550
+../../rtl/uart16550/raminfr.v
+../../rtl/uart16550/uart_debug_if.v
+../../rtl/uart16550/uart_tfifo.v
+../../rtl/uart16550/uart_rfifo.v
+../../rtl/uart16550/uart_receiver.v
+../../rtl/uart16550/uart_regs.v
+../../rtl/uart16550/uart_transmitter.v
+../../rtl/uart16550/uart_wb.v
+../../rtl/uart16550/uart_top.v
+../../rtl/uart16550/uart_sync_flops.v
 
 //
 // RTL files (top)

@@ -11,6 +11,11 @@ module or1200_soc_top (
 	clk,
 	rst,
 	//
+        // UART signals
+        //uart0
+        uart_stx,
+        uart_srx,
+	//
 	//gpio
 	//
 	gpio_in,
@@ -23,6 +28,12 @@ module or1200_soc_top (
 
 input   clk;
 input   rst;
+
+//
+// UART signals
+//
+output  uart_stx;
+input   uart_srx;
 
 //
 // gpio
@@ -111,6 +122,18 @@ wire    wb_rdm_rty_i;
 wire    [30:0]		pic_ints;
 
 //
+// UART16550 core slave i/f wires
+//uart0
+wire    [31:0]          wb_us_dat_i;
+wire    [31:0]          wb_us_dat_o;
+wire    [31:0]          wb_us_adr_i;
+wire    [3:0]           wb_us_sel_i;
+wire    wb_us_we_i;
+wire    wb_us_cyc_i;
+wire    wb_us_stb_i;
+wire    wb_us_ack_o;
+
+//
 // gpio
 //
 wire    [31:0]		wb_gpio_dat_i;
@@ -144,6 +167,7 @@ wire    wb_ocm_err_o;
 //
 assign  pic_ints[`APP_INT_RES1]  =  'b0;
 assign  pic_ints[`APP_INT_RES2]  =  'b0;
+assign  pic_ints[`APP_INT_RES3]  =  'b0;
 
 
 //add by dxzhang, orpsocv2
@@ -242,7 +266,40 @@ on_chip_ram_top on_chip_ram_top_inst(
 	.wb_err_o              ( wb_ocm_err_o )
 );
 
-
+//
+// Instantiation of the UART16550
+//uart0
+uart_top uart_top_inst (
+	// WISHBONE common
+	.wb_clk_i	       ( wb_clk ),
+	.wb_rst_i	       ( wb_rst ),
+	
+	// WISHBONE slave
+	.wb_adr_i	       ( wb_us_adr_i[4:0] ),
+	.wb_dat_i	       ( wb_us_dat_i ),
+	.wb_dat_o	       ( wb_us_dat_o ),
+	.wb_we_i	       ( wb_us_we_i  ),
+	.wb_stb_i	       ( wb_us_stb_i ),
+	.wb_cyc_i	       ( wb_us_cyc_i ),
+	.wb_ack_o	       ( wb_us_ack_o ),
+	.wb_sel_i	       ( wb_us_sel_i ),
+	
+	// Interrupt request
+	.int_o		       ( pic_ints[`APP_INT_UART] ),
+	
+	// UART signals
+	// serial input/output
+	.stx_pad_o	       ( uart_stx ),
+	.srx_pad_i	       ( uart_srx ),
+	
+	// modem signals
+	.rts_pad_o	       ( ),
+	.cts_pad_i	       ( 1'b0 ),
+	.dtr_pad_o	       ( ),
+	.dsr_pad_i	       ( 1'b0 ),
+	.ri_pad_i	       ( 1'b0 ),
+	.dcd_pad_i	       ( 1'b0 )
+);
 //
 // Instantiation of the GPIO
 //
@@ -478,19 +535,19 @@ wb_conmax_top	wb_conmax_top_inst(
 	.s8_stb_o	   (  ), 
 	.s8_ack_i	   ( 1'b0 ), 
 	.s8_err_i	   ( 1'b0 ), 
-	.s8_rty_i	   ( 1'b0 ),			
+	.s8_rty_i	   ( 1'b0 ),		
 	
-	// Slave 9 Interface
-	.s9_data_i	   ( 32'h0000_0000 ),
-	.s9_data_o	   (  ),
-	.s9_addr_o	   (  ),
-	.s9_sel_o	   (  ),
-	.s9_we_o	   (  ), 
-	.s9_cyc_o	   (  ),
-	.s9_stb_o	   (  ), 
-	.s9_ack_i	   ( 1'b0 ), 
+	// Slave 9 Interface	/*--UART16550--*/
+	.s9_data_i	   ( wb_us_dat_o ),
+	.s9_data_o	   ( wb_us_dat_i ),
+	.s9_addr_o	   ( wb_us_adr_i ),
+	.s9_sel_o	   ( wb_us_sel_i ),
+	.s9_we_o	   ( wb_us_we_i ), 
+	.s9_cyc_o	   ( wb_us_cyc_i ),
+	.s9_stb_o	   ( wb_us_stb_i ), 
+	.s9_ack_i	   ( wb_us_ack_o ), 
 	.s9_err_i	   ( 1'b0 ), 
-	.s9_rty_i	   ( 1'b0 ),			
+	.s9_rty_i	   ( 1'b0 ),		
 	
 	// Slave 10 Interface
 	.s10_data_i	   ( 32'h0000_0000 ),
