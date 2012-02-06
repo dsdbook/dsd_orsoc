@@ -13,7 +13,7 @@ export	CROSS_COMPILE
 
 CFLAGS += -O2
 
-all: $(APP).bin  System.map  $(APP).srec mif
+all: $(APP).bin  System.map mif
 
 
 reset.o: reset.S Makefile board.h
@@ -36,7 +36,7 @@ $(APP).hex: $(APP).bin
 $(APP).srec: $(APP).or32
 	$(OBJCOPY) -O srec $(APP).or32 $(APP).srec
 
-mif: $(APP).srec $(APP).ihex
+mif: $(APP).ihex
 	ihex2mif -f $(APP).ihex -o $(APP).mif
 	cp $(APP).mif ../on_chip_ram.mif
 
