@@ -258,11 +258,11 @@ end
 	 $fwrite(fexe, "\nEXECUTED(%d): %h:  %h  (exception)", insns, `OR1200_TOP.or1200_cpu.or1200_except.ex_pc, `OR1200_TOP.or1200_cpu.or1200_ctrl.ex_insn);
 	 for(i = 0; i < 32; i = i + 1) begin
 	    if (i % 4 == 0)
-	      $fdisplay(fexe);
+	        $fwrite(fexe,"\n");
 	    get_gpr(i, r);
 	    $fwrite(fexe, "GPR%d: %h  ", i, r);
 	 end
-	 $fdisplay(fexe);
+	 $fwrite(fexe,"\n");
 	 r = `OR1200_TOP.or1200_cpu.or1200_sprs.sr;
 	 $fwrite(fexe, "SR   : %h  ", r);
 	 r = `OR1200_TOP.or1200_cpu.or1200_sprs.epcr;

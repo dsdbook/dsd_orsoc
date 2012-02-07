@@ -419,7 +419,7 @@ set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC_FOR_AREA ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_MAP_LOGIC_TO_MEMORY_FOR_AREA ON
 set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
 set_global_assignment -name MISC_FILE "N:/RTA_projs/orsoc-asic/syn-fpga/DE2_OR1200_SOC_top.dpf"
-set_location_assignment PIN_AJ7 -to boot_flash
+set_location_assignment PIN_L8 -to boot_flash
 set_location_assignment PIN_L7 -to rst
 set_location_assignment PIN_AB25 -to adbg_rst
 set_location_assignment PIN_AC26 -to asic_test
