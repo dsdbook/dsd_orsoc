@@ -12,4 +12,3 @@ rm -rf VerdiLog
 rm -rf simv.*
 rm -rf simv
 rm -rf csrc
-rm -rf *.ver

@@ -9,12 +9,25 @@ reg     rst;
 
 // PLL
 reg     clk;
+reg     boot_flash;
 
 wire    uart_srx;
 wire    uart_stx;
 
 reg [31:0] gpio_in;
 wire [31:0] gpio_out;
+
+wire    [21:0] 	flash_addr;
+wire    [15:0] 	flash_dq;
+
+wire    flash_we_n;
+wire    flash_oe_n;
+wire    flash_ce_n;
+wire    flash_reset_n;
+wire    flash_wp_n;
+wire    flash_RY;
+wire    flash_byte_n;
+
 // -----------------------------------
 // Instance of Module: or1200_soc_top
 // -----------------------------------
@@ -24,6 +37,22 @@ or1200_soc_top i_or1200_soc_top(
 //uart
         .uart_srx      (        uart_srx        ),
         .uart_stx      (        uart_stx        ),
+
+	.boot_flash    (	boot_flash	),
+
+	//
+	//flash signals
+	//
+	.flash_addr(	flash_addr	),
+	.flash_dq  (	flash_dq	),
+	.flash_we_n(	flash_we_n	),
+	.flash_oe_n(	flash_oe_n	),
+	.flash_reset_n (	flash_reset_n	),
+	.flash_ce_n    (	flash_ce_n	),
+	.flash_wp_n    (	flash_wp_n	),
+	.flash_RY      (	flash_RY	),
+	.flash_byte_n  (	flash_byte_n	),
+
 
 	.gpio_in	(	gpio_in		),
 	.gpio_out	(	gpio_out	)
@@ -96,6 +125,70 @@ uart_rx uart_rx (
         .rx_in (                uart_stx)
 );
 
+initial begin
+	`ifdef	BOOT_FLASH
+	boot_flash   =  1'b1;
+	`else
+	boot_flash   =  1'b0;
+	`endif
+end
+//add by dxzhang,for 16 bit flash
+defparam or1200_soc_tb.s29gl064a_r3_r4_flash.mem_file_name =  "flash.ver";
+
+s29gl064a_r3_r4 s29gl064a_r3_r4_flash(
+	
+	.A21   (	flash_addr[21]	),
+	.A20   (	flash_addr[20]	),
+	.A19   (	flash_addr[19]	),
+	.A18   (	flash_addr[18]	),
+	.A17   (	flash_addr[17]	),
+	.A16   (	flash_addr[16]	),
+	.A15   (	flash_addr[15]	),
+	.A14   (	flash_addr[14]	),
+	.A13   (	flash_addr[13]	),
+	.A12   (	flash_addr[12]	),
+	.A11   (	flash_addr[11]	),
+	.A10   (	flash_addr[10]	),
+	.A9    (	flash_addr[9]	),
+	.A8    (	flash_addr[8]	),
+	.A7    (	flash_addr[7]	),
+	.A6    (	flash_addr[6]	),
+	.A5    (	flash_addr[5]	),
+	.A4    (	flash_addr[4]	),
+	.A3    (	flash_addr[3]	),
+	.A2    (	flash_addr[2]	),
+	.A1    (	flash_addr[1]	),
+	.A0    (	flash_addr[0]	),
+	
+	.DQ15  (	flash_dq[15]	),
+	.DQ14  (	flash_dq[14]	),
+	.DQ13  (	flash_dq[13]	),
+	.DQ12  (	flash_dq[12]	),
+	.DQ11  (	flash_dq[11]	),
+	.DQ10  (	flash_dq[10]	),
+	.DQ9   (	flash_dq[9]	),
+	.DQ8   (	flash_dq[8]	),
+	.DQ7   (	flash_dq[7]	),
+	.DQ6   (	flash_dq[6]	),
+	.DQ5   (	flash_dq[5]	),
+	.DQ4   (	flash_dq[4]	),
+	.DQ3   (	flash_dq[3]	),
+	.DQ2   (	flash_dq[2]	),
+	.DQ1   (	flash_dq[1]	),
+	.DQ0   (	flash_dq[0]	),
+	
+	.OENeg (	flash_oe_n	),
+	
+	.WENeg (	flash_we_n	),
+	.CENeg (	flash_ce_n	),
+	.RESETNeg  (	flash_reset_n	),
+
+	.WPNeg     (	flash_wp_n	),
+	//dxzhang: should be 1'b1 when 16bit flash
+	//.BYTENeg(1'b1)  ,
+	.BYTENeg   (	flash_byte_n	),
+	.RY(	flash_RY	)
+);
 
 or1200_monitor or1200_monitor();
 

@@ -1,0 +1,63 @@
+
+________________________________________________________________________________
+DESCRIPTION:  1M x 16 x 4Banks SDRAM
+
+MODEL:  mt48lc4m16.vhd                                           VERSION:    1.1
+                                                                 DATE: 08 FEB 28
+TIMING FILE:  mt48lc4m16.ftm                                     VERSION:    1.0
+                                                                 DATE: 04 FEB 15
+LOCATION:  http://www.FreeModelFoundry.com/fmf_models/ram/mt48lc4m16.vhd
+LOCATION:  http://www.FreeModelFoundry.com/fmf_models/ram/mt48lc4m16.ftm
+
+MODEL:  mt48lc4m16.v                                             VERSION:    1.0
+                                                                 DATE: 08 FEB 27
+TIMING FILE:  mt48lc4m16.ftmv                                    VERSION:    1.0
+                                                                 DATE: 08 FEB 26
+LOCATION:  http://www.FreeModelFoundry.com/fmf_vlog_models/ram/mt48lc4m16.v
+LOCATION:  http://www.FreeModelFoundry.com/fmf_vlog_models/ram/mt48lc4m16.ftmv
+
+LIBRARY:  RAM
+
+GENERIC PART NUMBERS COVERED:  K4S281632, MT48LC4M16
+
+________________________________________________________________________________
+
+SUPPORTED PART NUMBERS
+    ____________________________________________________________________________
+
+                   Micron Technology Inc.  
+
+    Part Number                       Data Source
+    ____________________________________________________________________________
+
+    MT48LC4M16A2TG-6                       1
+
+    MT48LC4M16A2TG-7E                      1
+
+    MT48LC4M16A2TG-75                      1
+
+    MT48LC4M16A2TG-8E                      1
+
+    ____________________________________________________________________________
+
+                   Samsung Electronics
+
+    Part Number                       Data Source
+    ____________________________________________________________________________
+
+    K4S281632E-TC60                        2
+
+    K4S281632E-TC75                        2
+
+
+________________________________________________________________________________
+
+DATA SOURCES
+
+    These are the primary sources of data used in determining behaviour and 
+    timing of the components represented by this model.
+
+    1.   Micron Technology Inc. 64MSDRAM_F.p65-Rev.G; Pub.1/04
+
+    2.   Samsung Electronics datasheet Rev 1.3, January 2004
+

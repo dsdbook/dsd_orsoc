@@ -5,6 +5,9 @@
 //or1200_monitor
 +define+OR1200_DISPLAY_ARCH_STATE
 
++define+FLASH_SIMULATION
++define+BOOT_FLASH
+
 //+define+NO_PLI
 //+define+USE_RIF
 
@@ -15,9 +18,10 @@
 
 //vcd file is too big!use fsdb file instead
 //+define+DUMP_VCD
-+define+DUMP_FSDB
+//+define+DUMP_FSDB
 
 -y ../bench
+-y ../model/flash
 
 -y ../../rtl/top
 -y ../../rtl/or1200
@@ -26,6 +30,7 @@
 -y ../../rtl/pll
 -y ../../rtl/on_chip_ram
 -y ../../rtl/uart16550
+-y ../../rtl/wb_flash_if
 
 //
 // Test bench files
@@ -57,6 +62,9 @@
 ../../rtl/uart16550/uart_wb.v
 ../../rtl/uart16550/uart_top.v
 ../../rtl/uart16550/uart_sync_flops.v
+
++incdir+../../rtl/wb_flash_if
+../../rtl/wb_flash_if/wb_flash_if.v
 
 //
 // RTL files (top)
@@ -138,6 +146,10 @@
 ../../rtl/or1200/or1200_xcv_ram32x8d.v
 ../../rtl/or1200/or1200_fpu.v
 ../../rtl/or1200/or1200_spram.v
+
+
+//flash ,sdram model
+../model/flash/s29gl064a_r3_r4.v
 
 //
 // Library files

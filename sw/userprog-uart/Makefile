@@ -32,6 +32,7 @@ $(APP).or32: reset.o $(APP).o Makefile uart.o
 $(APP).bin: $(APP).or32
 	$(OBJCOPY) $(APP).or32 $(APP).bin -O binary -I elf32-or32
 	bin2hex_8 $(APP).bin > $(APP).ver
+	cp $(APP).bin ../flash-boot/userprog.bin
 
 $(APP).hex: $(APP).bin
 	bin2hex_32  $(APP).bin > $(APP).hex

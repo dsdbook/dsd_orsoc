@@ -15,6 +15,21 @@ module or1200_soc_top (
         //uart0
         uart_stx,
         uart_srx,
+
+	//
+	//flash signals
+	//
+	boot_flash, // active high
+	flash_addr,
+	flash_dq,
+	flash_we_n,
+	flash_oe_n,
+	flash_reset_n,
+	flash_ce_n,
+	flash_wp_n,
+	flash_RY,
+	flash_byte_n,
+
 	//
 	//gpio
 	//
@@ -34,6 +49,30 @@ input   rst;
 //
 output  uart_stx;
 input   uart_srx;
+
+input   boot_flash;
+//
+//flash signal
+//
+output  [21:0] flash_addr;
+inout   [15:0] flash_dq;
+
+wire    [15:0] flash_dq_in;
+wire    [15:0] flash_dq_out;
+wire	flash_dq_drive_n;
+
+assign  flash_dq =  flash_dq_drive_n ? 16'hzzzz : flash_dq_out;
+assign  flash_dq_in  =  flash_dq;
+
+output  flash_we_n;
+output  flash_oe_n;
+output  flash_reset_n;
+output  flash_ce_n;
+output  flash_wp_n;
+input   flash_RY;
+//should be 1, word access
+output  flash_byte_n;
+wire    flash_byte_n;
 
 //
 // gpio
@@ -147,6 +186,21 @@ wire    wb_gpio_ack_o;
 wire    wb_gpio_err_o;
 
 //
+//Flash
+//
+wire    [31:0]		wb_flash_dat_i;
+wire    [31:0]		wb_flash_dat_o;
+wire    [31:0]		wb_flash_adr_i;
+wire    [3:0]		wb_flash_sel_i;
+wire    wb_flash_cyc_i;
+wire    wb_flash_we_i;
+wire    wb_flash_stb_i;
+wire    wb_flash_ack_o;
+wire    wb_flash_err_o;
+wire    wb_flash_rty_o;
+
+//
+//
 // on_chip memory
 //
 wire    [31:0]		wb_ocm_dat_i;
@@ -161,6 +215,29 @@ wire    wb_ocm_err_o;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
+wire    [31:0] wb_rim_adr_o_flash_prefix;
+reg     flash_prefix;
+
+//FLASH_BASE_ADDR=0xF0000000
+always @(posedge wb_clk or posedge wb_rst)
+begin
+	if(wb_rst) begin
+		flash_prefix <=  1'b1; 
+	end
+	else	begin
+		if(wb_rim_adr_o[31:28] == 4'b1111) begin 
+			flash_prefix  <=  1'b0;
+		end
+		else begin
+			flash_prefix <= flash_prefix;
+		end
+	end
+end
+
+assign  wb_rim_adr_o_flash_prefix  =  flash_prefix ? {4'b1111,wb_rim_adr_o[27:0]} : wb_rim_adr_o;
+
+wire    [31:0]	mux_to_wb_rim_adr_o;
+assign  mux_to_wb_rim_adr_o  =  boot_flash ? wb_rim_adr_o_flash_prefix : wb_rim_adr_o; 
 
 //
 // Unused interrupts
@@ -173,6 +250,42 @@ assign  pic_ints[`APP_INT_RES3]  =  'b0;
 //add by dxzhang, orpsocv2
 wire    wb_rdm_stb_o_tmp;
 assign  wb_rdm_stb_o   =  (wb_rdm_cyc_o == 1'b1) ? wb_rdm_stb_o_tmp : 1'b0;
+
+//
+// Instantiation of the WB_Flash_IF
+//            
+
+assign  flash_wp_n	 =  1'b1; 
+wb_flash_if  wb_flash_if_inst (
+	
+	.wb_rst_i	   ( wb_rst ),
+	.wb_clk_i	   ( wb_clk ),
+	.wb_cyc_i	   ( wb_flash_cyc_i ),
+	.wb_stb_i	   ( wb_flash_stb_i ),
+	.wb_adr_i	   ( wb_flash_adr_i ),
+	.wb_sel_i	   ( wb_flash_sel_i ),
+	.wb_we_i 	   ( wb_flash_we_i ),
+	.wb_dat_i	   ( wb_flash_dat_i ),
+	.wb_dat_o	   ( wb_flash_dat_o ),
+	.wb_ack_o	   ( wb_flash_ack_o ),
+	.wb_err_o	   ( wb_flash_err_o ),
+	.wb_rty_o	   ( wb_flash_rty_o ),
+	.FLASH_A	   ( flash_addr ),
+	.FLASH_CE_N	   ( flash_ce_n ),
+	.FLASH_D_I	   ( flash_dq_in ),
+	.FLASH_D_O	   ( flash_dq_out ),
+	// flash_wp_n?
+	.FLASH_D_T_N		   ( flash_dq_drive_n ),
+	.FLASH_OE_N		       ( flash_oe_n ),
+	.FLASH_RP_N		       ( flash_reset_n ),
+	.FLASH_SnBYTE	       ( flash_byte_n ),
+	.FLASH_SnWR		       ( flash_we_n ),
+	`ifdef FLASH_SIMULATION
+	.FLASH_STS                 ( 1'b1 )
+	`else	
+	.FLASH_STS                 ( flash_RY )
+	`endif  //FLASH_SIMULATION
+);
 
 
 or1200_top or1200_top_inst (
@@ -338,7 +451,7 @@ wb_conmax_top	wb_conmax_top_inst(
 	// Master 0 Interface	-- OR1200 Instruction Master
 	.m0_data_i	   ( wb_rim_dat_o ),
 	.m0_data_o	   ( wb_rim_dat_i ),
-	.m0_addr_i	   ( wb_rim_adr_o),
+	.m0_addr_i	   ( mux_to_wb_rim_adr_o ),
 	.m0_sel_i	   ( wb_rim_sel_o ),
 	.m0_we_i	   ( wb_rim_we_o ),
 	.m0_cyc_i	   ( wb_rim_cyc_o ),
@@ -606,17 +719,19 @@ wb_conmax_top	wb_conmax_top_inst(
 	.s14_ack_i	   ( wb_gpio_ack_o ), 
 	.s14_err_i	   ( wb_gpio_err_o ), 
 	.s14_rty_i	   ( 1'b0 ),
-	// Slave 15 Interface
-	.s15_data_i	   ( 32'h0000_0000 ),
-	.s15_data_o	   (  ),
-	.s15_addr_o	   (  ),
-	.s15_sel_o	   (  ),
-	.s15_we_o	   (  ), 
-	.s15_cyc_o	   (  ),
-	.s15_stb_o	   (  ), 
-	.s15_ack_i	   ( 1'b0 ), 
-	.s15_err_i	   ( 1'b0 ), 
-	.s15_rty_i	   ( 1'b0 )
+
+    // Slave 15 Interface   /*--FLASH--*/
+    .s15_data_i    ( wb_flash_dat_o ),
+    .s15_data_o    ( wb_flash_dat_i ),
+    .s15_addr_o    ( wb_flash_adr_i ),
+    .s15_sel_o     ( wb_flash_sel_i ),
+    .s15_we_o      ( wb_flash_we_i ),
+    .s15_cyc_o     ( wb_flash_cyc_i ),
+    .s15_stb_o     ( wb_flash_stb_i ),
+    .s15_ack_i     ( wb_flash_ack_o ),
+    .s15_err_i     ( wb_flash_err_o ),
+    .s15_rty_i     ( wb_flash_rty_o )
+
 );
 
 endmodule
