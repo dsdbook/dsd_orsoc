@@ -138,7 +138,7 @@
  * registers, we can slow it down to 10 msec using TMRCNT. If the default
  * period is acceptable, TMRCNT can be left undefined.
  *----------------------------------------------------------------------*/
-#define CONFIG_SYS_HZ		100  /* 10msec/HZ */
+#define CONFIG_SYS_HZ		20  /* 10msec/HZ */
 
 /*------------------------------------------------------------------------
  * ETHERNET -- The header file for the SMC91111 driver hurts my eyes ...

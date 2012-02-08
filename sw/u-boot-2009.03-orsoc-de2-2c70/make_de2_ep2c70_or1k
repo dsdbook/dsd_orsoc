@@ -1,3 +1,14 @@
+#or32-elf-ld 2.18 or above: vi cpu/or1k/start.S, using "board_init" and "tick_isr"
+#vi or1k_config.mk, using "SYM_PREFIX = "
+#vi board/sdust/de2_ep2c70_or1k/u-boot.lds, using "__u_boot_cmd_start = .;" and "__u_boot_cmd_end = .;"
+
+#or32-elf-ld 2.17 or below: vi cpu/or1k/start.S, using "_board_init" and "tick_isr"
+#vi or1k_config.mk, using "SYM_PREFIX = _ "
+#vi board/sdust/de2_ep2c70_or1k/u-boot.lds, using "___u_boot_cmd_start = .;" and "___u_boot_cmd_end = .;"
+
+#notice: Makefile : "sed  -n -e 's/.*\($(SYM_PREFIX)__u_boot_cmd_.*\)/-u\1/p'|sort|uniq`;\" 
+
+
 rm -rf uboot.elfinfo
 rm -rf uboot.ver
 
