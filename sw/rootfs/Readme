@@ -1,0 +1,16 @@
+dxzhang@ustc.edu
+(1) version
+  busybox-1.7.5 is old but stable
+(2) generate initrd
+	config,compile and install busybox : cd busybox; make menuconfig; make ; make install
+//	working config files: busybox-1.7.5.config ; copy the config file as .config
+	compile app : cd app/<your_app_dir>;  or32-linux-gcc your_app.c
+	su root
+	./gen_initrd.sh  (for busybox-1.7.5)
+(3)	
+	cd linux-2.6.23
+	make ; source mkimage_vmlinux
+	and , will generate vmlinux.bin and vmlinux.img
+
+	
+	
