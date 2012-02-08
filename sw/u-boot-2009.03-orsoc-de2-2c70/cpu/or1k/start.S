@@ -406,8 +406,8 @@ jump_to__board_init:
   l.ori   r1,r1,lo(_stack)
 
   /* Jump to main */
-  l.movhi r2,hi(_board_init)
-  l.ori   r2,r2,lo(_board_init)
+  l.movhi r2,hi(board_init)
+  l.ori   r2,r2,lo(board_init)
   l.jr    r2
   l.nop
 
@@ -483,8 +483,8 @@ _dc_enable:
 	.section  .tick_timer_text 
 
 _tick_timer_interrupt_text:
-        l.movhi r2,hi(_tick_isr)
-        l.ori   r2,r2,lo(_tick_isr)
+        l.movhi r2,hi(tick_isr)
+        l.ori   r2,r2,lo(tick_isr)
         l.jalr  r2
         l.nop
 

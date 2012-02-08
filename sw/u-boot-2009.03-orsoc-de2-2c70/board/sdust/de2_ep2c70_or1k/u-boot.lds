@@ -43,9 +43,11 @@ SECTIONS
       	.u_boot_cmd (ADDR(.rodata) + SIZEOF(.rodata)) : AT(LOADADDR(.rodata)+SIZEOF(.rodata))
       	{
 		. = .;
+      	  	__u_boot_cmd_start = .;
       	  	___u_boot_cmd_start = .;
       	*(.u_boot_cmd)
 	. = ALIGN(4);
+      		__u_boot_cmd_end = .;
       		___u_boot_cmd_end = .;
       	}
 
