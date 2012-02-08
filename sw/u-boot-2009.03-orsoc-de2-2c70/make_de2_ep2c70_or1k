@@ -1,0 +1,12 @@
+rm -rf uboot.elfinfo
+rm -rf uboot.ver
+
+make distclean
+make de2_ep2c70_or1k_config
+make
+
+or32-elf-readelf -a u-boot >u-boot.elfinfo
+
+or32-elf-objdump -d u-boot >u-boot.dis
+
+bin2hex_8 u-boot.bin  >u-boot.ver
