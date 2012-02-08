@@ -24,5 +24,6 @@
 
 PLATFORM_CPPFLAGS += -D__or1k__  -Wall  -ffreestanding  -fno-builtin -mhard-mul  -fomit-frame-pointer 
 
-SYM_PREFIX = _
+#SYM_PREFIX = _
+SYM_PREFIX =
 
