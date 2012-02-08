@@ -1,0 +1,8 @@
+*.cmd
+vmlinux
+vmlinux.dis
+vmlinux.bin
+System.map
+lib/lib.a
+usr/.initramfs_data.cpio.gz.d
+

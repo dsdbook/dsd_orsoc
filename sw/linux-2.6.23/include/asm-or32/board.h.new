@@ -1,0 +1,98 @@
+#ifndef _OR32_BOARH_H
+#define _OR32_BOARH_H 
+
+#include <asm/01-highland/highland.h>
+
+/* System clock frequecy */
+#define SYS_CLK		(CONFIG_OR32_SYS_CLK*1000000)
+#define SYS_CLK_PERIOD  (1000/CONFIG_OR32_SYS_CLK)
+
+/* Memory organization */
+#define SRAM_BASE_ADD   0x00000000
+
+#define SDRAM_BASE_ADDR   SRAM_BASE_ADD
+
+
+#define FLASH_BASE_ADD  0xf0000000
+#define FLASH_BASE_ADDR FLASH_BASE_ADD
+
+#define SD_BASE                 0x20000000
+
+/* Devices base address */
+#define UART_BASE_ADD   0x90000000
+#define UART_BASE_ADDR 	UART_BASE_ADD
+
+#define CRT_BASE_ADD    0x97000000
+//#define FBMEM_BASE_ADD  0xa8000000
+#define ETH_BASE_ADD    0xA0000000
+
+#define ETH_BASE		0xA0000000
+#define ETH_IRQ			4
+#define DM9000_BASE		ETH_BASE
+#define DM9000A_BASE		ETH_BASE
+#define DM9000_IRQ		ETH_IRQ
+#define DM9000A_IRQ		ETH_IRQ
+
+#define KBD_BASE_ADD	0x94000000
+
+/* Define this if you want to use I and/or D cache */
+#define IC_SIZE         CONFIG_OR32_IC_SIZE
+#define IC_LINE         CONFIG_OR32_IC_LINE
+#define DC_SIZE         CONFIG_OR32_DC_SIZE
+#define DC_LINE         CONFIG_OR32_DC_LINE
+
+/* Define this if you want to use I and/or D MMU */
+
+#define DMMU_SET_NB     CONFIG_OR32_DTLB_ENTRIES
+#define IMMU_SET_NB     CONFIG_OR32_ITLB_ENTRIES
+
+/* Define this if you are using MC */
+#define MC_INIT         CONFIG_OR32_MC_INIT
+
+/* Uart definitions */
+#define UART_DLL        0       /* Out: Divisor Latch Low (DLAB=1) */
+#define UART_DLM        1       /* Out: Divisor Latch High (DLAB=1) */
+
+#define OR32_CONSOLE_BAUD  115200
+#define UART_DEVISOR       SYS_CLK/(16*OR32_CONSOLE_BAUD)
+
+/* Define ethernet MAC address */
+#define MACADDR0	0x00
+#define MACADDR1	0x01
+#define MACADDR2	0x02
+#define MACADDR3	0x03
+#define MACADDR4	0x04
+#define MACADDR5	0x05
+
+/* SPI */
+#define SPI_BASE                0xB0000000
+#define SPI_RX0                 ( SPI_BASE + 0x00)
+#define SPI_RX1                 ( SPI_BASE + 0x04)
+#define SPI_RX2                 ( SPI_BASE + 0x08)
+#define SPI_RX3                 ( SPI_BASE + 0x0c)
+#define SPI_TX0                 ( SPI_BASE + 0x00)
+#define SPI_TX1                 ( SPI_BASE + 0x04)
+#define SPI_TX2                 ( SPI_BASE + 0x08)
+#define SPI_TX3                 ( SPI_BASE + 0x0c)
+#define SPI_CTRL                ( SPI_BASE + 0x10)
+#define SPI_DIVIDER             ( SPI_BASE + 0x14)
+#define SPI_SS                  ( SPI_BASE + 0x18)
+
+//spi ctrl register bit define
+//CHAR_LEN [6:0]
+#define SPI_CTRL_CHAR_LEN_MASK  0x127
+//GO_BSY [8]
+#define SPI_CTRL_GO_BSY         (0x1 << 8)
+#define SPI_CTRL_RX_NEG         (0x1 << 9)
+#define SPI_CTRL_TX_NEG         (0x1 << 10)
+#define SPI_CTRL_LSB            (0x1 << 11)
+#define SPI_CTRL_IE             (0x1 << 12)
+#define SPI_CTRL_ASS            (0x1 << 13)
+#define SPI_CTRL_CPOL           (0x1 << 14)
+
+#define SPI_IRQ			13
+
+
+
+#endif
+

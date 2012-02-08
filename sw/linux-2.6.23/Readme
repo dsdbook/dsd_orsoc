@@ -1,0 +1,12 @@
+0.check  board information: include/asm/board.h
+
+1. simulation with or1k-sim: 
+	unselect boot from flash;
+	unselect dm9000 driver
+
+2. for FPGA, 25MHz
+   cp config.fpga .config
+   make menuconfig
+   make, generate vmlinux and vmlinux.bin
+ 
+   source mkimage_vmlinux ,generate vmlinux.img

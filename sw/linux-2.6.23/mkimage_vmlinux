@@ -1,0 +1,1 @@
+/opt/or32/bin/mkimage -A or1k -O linux -T kernel -C none -a 0 -e 0x100 -n "or1k-linux" -d vmlinux.bin vmlinux.img
