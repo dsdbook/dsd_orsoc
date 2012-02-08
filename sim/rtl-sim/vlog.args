@@ -33,6 +33,7 @@
 -y ../../rtl/uart16550
 -y ../../rtl/wb_flash_if
 -y ../../rtl/yadmc
+-y ../../rtl/dm9000a
 
 //
 // Test bench files
@@ -88,6 +89,10 @@
 ../../rtl/wb_conmax/wb_conmax_slave_if.v 
 ../../rtl/wb_conmax/wb_conmax_top.v 
 
++incdir+../../rtl/dm9000a
+ ../../rtl/dm9000a/dm9000a_wb_interface.v
+
+ 
 // RTL files (or1200)
 //
 +incdir+../../rtl/or1200

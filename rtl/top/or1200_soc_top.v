@@ -45,6 +45,18 @@ module or1200_soc_top (
 	sdram0_clk,
 	sdram0_cs_n,
 	//
+	//ENET signals
+	//
+	oENET_CMD,
+	oENET_CS_N,
+	iENET_INT,
+	oENET_IOR_N,
+	oENET_IOW_N,
+	oENET_RESET_N,
+	ENET_D,
+	oENET_CLK,
+	//
+	//
 	//gpio
 	//
 	gpio_in,
@@ -106,6 +118,23 @@ wire   [15:0]		sdram0_dq_in;
 wire  [15:0]		sdram0_dq_out;
 wire    sdram0_dq_drive_n;
 
+//
+//ENET signals
+//
+output  oENET_CMD;
+output  oENET_CS_N;
+input   iENET_INT;
+output  oENET_IOR_N;
+output  oENET_IOW_N;
+output  oENET_RESET_N;
+inout   [15:0]  ENET_D;
+wire    [15:0]	ENET_D_i;
+wire    [15:0]	ENET_D_o;
+wire    ENET_D_oe;	
+output  oENET_CLK;
+
+assign  ENET_D 	 =  ENET_D_oe ? ENET_D_o: 16'hzzzz;
+assign  ENET_D_i =  ENET_D;
 //
 // gpio
 //
@@ -244,6 +273,17 @@ wire    wb_gpio_ack_o;
 wire    wb_gpio_err_o;
 
 //
+//ENET signals
+//
+wire    [31:0]		wb_d9k_dat_i;
+wire    [31:0]		wb_d9k_dat_o;
+wire    [31:0]		wb_d9k_adr_i;
+wire    [3:0] 		wb_d9k_sel_i;
+wire    wb_d9k_cyc_i;
+wire    wb_d9k_stb_i;
+wire    wb_d9k_we_i;
+wire    wb_d9k_ack_o;
+//
 //Flash
 //
 wire    [31:0]		wb_flash_dat_i;
@@ -304,6 +344,7 @@ assign  mux_to_wb_rim_adr_o  =  boot_flash ? wb_rim_adr_o_flash_prefix : wb_rim_
 assign  pic_ints[`APP_INT_RES1]  =  'b0;
 assign  pic_ints[`APP_INT_RES2]  =  'b0;
 assign  pic_ints[`APP_INT_RES3]  =  'b0;
+assign  pic_ints[`APP_INT_RES4]  =  'b0;
 
 
 //add by dxzhang, orpsocv2
@@ -472,6 +513,38 @@ uart_top uart_top_inst (
 	.ri_pad_i	       ( 1'b0 ),
 	.dcd_pad_i	       ( 1'b0 )
 );
+
+//
+// Instantiation of the RTA_IF
+//   
+dm9000a_wb_interface   dm9000a_inst(
+	
+	.wb_adr_i	   ( wb_d9k_adr_i ),
+	.wb_dat_i	   ( wb_d9k_dat_i[31:16] ),
+	.wb_dat_o	   ( wb_d9k_dat_o[31:16] ),
+	.wb_we_i	   ( wb_d9k_we_i ),
+	.wb_sel_i	   ( wb_d9k_sel_i ),
+	.wb_stb_i	   ( wb_d9k_stb_i ),
+	.wb_ack_o	   ( wb_d9k_ack_o ),
+	.wb_cyc_i	   ( wb_d9k_cyc_i ),
+	
+	.wb_clk_i	   ( wb_clk ),
+	.wb_rst_i	   ( wb_rst ), 
+	
+	.oENET_CMD	   ( oENET_CMD ),
+	.oENET_CS_N	   ( oENET_CS_N ),
+	.iENET_INT	   ( iENET_INT ),
+	.oENET_INT	   ( pic_ints[`APP_INT_ETH] ),
+	.oENET_IOR_N	   ( oENET_IOR_N ),
+	.oENET_IOW_N	   ( oENET_IOW_N ),
+	.oENET_RESET_N	   ( oENET_RESET_N ),
+	.ENET_D_i	       ( ENET_D_i ),
+	.ENET_D_o	       ( ENET_D_o ),
+	.ENET_D_oe	       ( ENET_D_oe )
+);
+
+assign  oENET_CLK=  wb_clk;
+
 //
 // Instantiation of the GPIO
 //
@@ -769,17 +842,18 @@ wb_conmax_top	wb_conmax_top_inst(
 	.s9_err_i	   ( 1'b0 ), 
 	.s9_rty_i	   ( 1'b0 ),		
 	
-	// Slave 10 Interface
-	.s10_data_i	   ( 32'h0000_0000 ),
-	.s10_data_o	   (  ),
-	.s10_addr_o	   (  ),
-	.s10_sel_o	   (  ),
-	.s10_we_o	   (  ), 
-	.s10_cyc_o	   (  ),
-	.s10_stb_o	   (  ), 
-	.s10_ack_i	   ( 1'b0 ), 
+	// Slave 10 Interface	/*--DM9000A--*/
+	.s10_data_i	   ( wb_d9k_dat_o ),
+	.s10_data_o	   ( wb_d9k_dat_i ),
+	.s10_addr_o	   ( wb_d9k_adr_i ),
+	.s10_sel_o	   ( wb_d9k_sel_i ),
+	.s10_we_o	   ( wb_d9k_we_i ), 
+	.s10_cyc_o	   ( wb_d9k_cyc_i ),
+	.s10_stb_o	   ( wb_d9k_stb_i ), 
+	.s10_ack_i	   ( wb_d9k_ack_o ), 
 	.s10_err_i	   ( 1'b0 ), 
-	.s10_rty_i	   ( 1'b0 ),			
+	.s10_rty_i	   ( 1'b0 ),		
+
 	// Slave 11 Interface
 	.s11_data_i	   ( 32'h0000_0000 ),
 	.s11_data_o	   (  ),

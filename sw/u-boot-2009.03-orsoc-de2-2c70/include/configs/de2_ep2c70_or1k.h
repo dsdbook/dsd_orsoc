@@ -152,7 +152,6 @@
 //#undef  CONFIG_SMC91111_EXT_PHY		/* Internal PHY		*/
 //#define CONFIG_SMC_USE_32_BIT			/* 32-bit interface	*/
 
-//dxzhang: 20110324 ,use enc28j60 instead
 #define CONFIG_DRIVER_DM9000		1
 #define CONFIG_DM9000_BASE		DM9000_BASE
 #define DM9000_IO			CONFIG_DM9000_BASE
