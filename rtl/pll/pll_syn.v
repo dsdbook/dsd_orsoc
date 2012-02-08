@@ -13,10 +13,10 @@
 // applicable agreement for further details.
 
 // VENDOR "Altera"
-// PROGRAM "Quartus II 64-Bit"
+// PROGRAM "Quartus II"
 // VERSION "Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Full Version"
 
-// DATE "02/03/2012 19:25:32"
+// DATE "02/08/2012 08:52:47"
 
 // 
 // Device: Altera EP2C5T144C6 Package TQFP144
@@ -31,9 +31,11 @@
 module pll (
 	inclk0,
 	c0,
+	c1,
 	locked)/* synthesis synthesis_greybox=0 */;
 input 	inclk0;
 output 	c0;
+output 	c1;
 output 	locked;
 
 wire gnd;
@@ -47,14 +49,18 @@ assign unknown = 1'b0;
 
 wire \altpll_component|_locked ;
 wire \altpll_component|_clk0 ;
+wire \altpll_component|_clk1 ;
 
 
 pll_altpll_1 altpll_component(
 	.locked(\altpll_component|_locked ),
 	._clk0(\altpll_component|_clk0 ),
+	._clk1(\altpll_component|_clk1 ),
 	.inclk({gnd,inclk0}));
 
 assign c0 = \altpll_component|_clk0 ;
+
+assign c1 = \altpll_component|_clk1 ;
 
 assign locked = \altpll_component|_locked ;
 
@@ -63,9 +69,11 @@ endmodule
 module pll_altpll_1 (
 	locked,
 	_clk0,
+	_clk1,
 	inclk)/* synthesis synthesis_greybox=0 */;
 output 	locked;
 output 	_clk0;
+output 	_clk1;
 input 	[1:0] inclk;
 
 wire gnd;
@@ -77,13 +85,12 @@ assign vcc = 1'b1;
 // unknown value (1'bx) is not needed for this tool. Default to 1'b0
 assign unknown = 1'b0;
 
-wire \pll~CLK1 ;
 wire \pll~CLK2 ;
 
 wire [2:0] pll_CLK_bus;
 
 assign _clk0 = pll_CLK_bus[0];
-assign \pll~CLK1  = pll_CLK_bus[1];
+assign _clk1 = pll_CLK_bus[1];
 assign \pll~CLK2  = pll_CLK_bus[2];
 
 cycloneii_pll pll(
@@ -106,7 +113,10 @@ defparam pll.c0_initial = 1;
 defparam pll.c0_low = 16;
 defparam pll.c0_mode = "even";
 defparam pll.c0_ph = 0;
-defparam pll.c1_mode = "bypass";
+defparam pll.c1_high = 8;
+defparam pll.c1_initial = 1;
+defparam pll.c1_low = 8;
+defparam pll.c1_mode = "even";
 defparam pll.c1_ph = 0;
 defparam pll.c2_mode = "bypass";
 defparam pll.c2_ph = 0;
@@ -116,7 +126,10 @@ defparam pll.clk0_divide_by = 2;
 defparam pll.clk0_duty_cycle = 50;
 defparam pll.clk0_multiply_by = 1;
 defparam pll.clk0_phase_shift = "0";
+defparam pll.clk1_counter = "c1";
+defparam pll.clk1_divide_by = 1;
 defparam pll.clk1_duty_cycle = 50;
+defparam pll.clk1_multiply_by = 1;
 defparam pll.clk1_phase_shift = "0";
 defparam pll.clk2_duty_cycle = 50;
 defparam pll.clk2_phase_shift = "0";

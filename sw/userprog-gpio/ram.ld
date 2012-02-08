@@ -1,7 +1,7 @@
 MEMORY
         {
         vectors : ORIGIN = 0x00000000, LENGTH = 0x00002000 
-        ram     : ORIGIN = 0x00002000, LENGTH = 0x00008000-0x00002000        
+        ram     : ORIGIN = 0x00002000, LENGTH = 0x02000000-0x00002000        
 	}
  
 SECTIONS

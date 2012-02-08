@@ -28,6 +28,18 @@ wire    flash_wp_n;
 wire    flash_RY;
 wire    flash_byte_n;
 
+//sdram0 signals
+wire    [15:0]  sdram0_dq;
+wire    [12:0]  sdram0_addr;
+wire    [1:0]   sdram0_ba;
+wire    sdram0_cas_n;
+wire    sdram0_ras_n;
+wire    sdram0_cke;
+wire    sdram0_we_n;
+wire    [1:0]   sdram0_dqm;
+wire    sdram0_clk;
+wire    sdram0_cs_n;
+
 // -----------------------------------
 // Instance of Module: or1200_soc_top
 // -----------------------------------
@@ -53,6 +65,17 @@ or1200_soc_top i_or1200_soc_top(
 	.flash_RY      (	flash_RY	),
 	.flash_byte_n  (	flash_byte_n	),
 
+	// sdram0_signals
+	.sdram0_dq     (	sdram0_dq	),
+	.sdram0_addr   (	sdram0_addr	),
+	.sdram0_ba     (	sdram0_ba	),
+	.sdram0_cas_n  (	sdram0_cas_n	),
+	.sdram0_ras_n  (	sdram0_ras_n	),
+	.sdram0_cke    (	sdram0_cke	),
+	.sdram0_we_n   (	sdram0_we_n	),
+	.sdram0_dqm    (	sdram0_dqm	),
+	.sdram0_clk    (	sdram0_clk	),
+	.sdram0_cs_n   (	sdram0_cs_n	),
 
 	.gpio_in	(	gpio_in		),
 	.gpio_out	(	gpio_out	)
@@ -189,6 +212,22 @@ s29gl064a_r3_r4 s29gl064a_r3_r4_flash(
 	.BYTENeg   (	flash_byte_n	),
 	.RY(	flash_RY	)
 );
+
+//sdram model
+mt48lc16m16a2
+sdram0_module(
+	.Dq        (	sdram0_dq	),
+	.Addr      (	sdram0_addr[12:0]	),
+	.Ba         (	sdram0_ba[1:0]	),
+	.Clk   (	sdram0_clk	),
+	.Cke   (	sdram0_cke	),
+	.Cs_n  (	sdram0_cs_n	),
+	.Ras_n (	sdram0_ras_n	),
+	.Cas_n (	sdram0_cas_n	),
+	.We_n  (	sdram0_we_n	),
+	.Dqm   (	sdram0_dqm[1:0]	)
+);
+
 
 or1200_monitor or1200_monitor();
 

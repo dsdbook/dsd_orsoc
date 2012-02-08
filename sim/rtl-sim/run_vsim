@@ -16,5 +16,5 @@ vlog +nowarnBSOB +nowarnRDGN -f ./vlog.args
 #vsim -pli $NOVAS_INST_DIR/share/PLI/MODELSIM/$PLATFORM/novas_fli.so -novopt  +notimingchecks  work.or1200_soc_tb -pli jp-io-vpi.so  -c -do sim.do
 #vsim -pli $NOVAS_INST_DIR/share/PLI/MODELSIM/$PLATFORM/novas_fli.so  +notimingchecks  work.or1200_soc_tb -pli jp-io-vpi.so  -c -do sim.do
 #vsim -pli $NOVAS_INST_DIR/share/PLI/MODELSIM/$PLATFORM/novas_fli.so  +nospecify work.or1200_soc_tb -pli jp-io-vpi.so  -c -do sim.do
-#vsim -pli $NOVAS_INST_DIR/share/PLI/MODELSIM/$PLATFORM/novas_fli.so  +nospecify work.or1200_soc_tb  -c -do sim.do
-vsim -pli $NOVAS_INST_DIR/share/PLI/MODELSIM/$PLATFORM/novas_fli.so  work.or1200_soc_tb  -c -do sim.do
+vsim -pli $NOVAS_INST_DIR/share/PLI/MODELSIM/$PLATFORM/novas_fli.so  +nospecify work.or1200_soc_tb  -c -do sim.do
+#vsim -pli $NOVAS_INST_DIR/share/PLI/MODELSIM/$PLATFORM/novas_fli.so  work.or1200_soc_tb  -c -do sim.do

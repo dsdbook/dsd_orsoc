@@ -31,6 +31,20 @@ module or1200_soc_top (
 	flash_byte_n,
 
 	//
+	// SDRAM signals
+	//
+	// sdram0  signals
+	sdram0_dq,
+	sdram0_addr,
+	sdram0_ba,
+	sdram0_cas_n,
+	sdram0_ras_n,
+	sdram0_cke,
+	sdram0_we_n,
+	sdram0_dqm,
+	sdram0_clk,
+	sdram0_cs_n,
+	//
 	//gpio
 	//
 	gpio_in,
@@ -75,6 +89,24 @@ output  flash_byte_n;
 wire    flash_byte_n;
 
 //
+// SDRAM signals
+//
+// sdram0  signals
+output  [12:0]           sdram0_addr;
+output  [1:0]            sdram0_ba;
+output  sdram0_cas_n;
+output  sdram0_ras_n;
+output  sdram0_cke;
+output  sdram0_we_n;
+output  [1:0]           sdram0_dqm;
+output  sdram0_clk;
+output  sdram0_cs_n;
+inout   [15:0]		sdram0_dq;
+wire   [15:0]		sdram0_dq_in;
+wire  [15:0]		sdram0_dq_out;
+wire    sdram0_dq_drive_n;
+
+//
 // gpio
 //
 input   [31:0]	gpio_in;
@@ -85,10 +117,16 @@ wire    [31:0]	gpio_oe;
 `ifdef	FPGA_PLL_SIM
 wire    cpu_clk;
 reg     wb_clk;
+reg     clk_50M;
 
 always begin
 	#20   wb_clk 	<= 	1'b0;
 	#20   wb_clk 	<= 	1'b1;
+end
+
+always begin
+	#10 clk_50M 	<= 	1'b0;
+	#10 clk_50M 	<= 	1'b1;
 end
 
 assign  cpu_clk  =  wb_clk;
@@ -97,9 +135,11 @@ assign  cpu_clk  =  wb_clk;
 //PLL inst
 wire    wb_clk;
 wire    cpu_clk;
+wire    clk_50M;
 pll	pll_inst (
 	.inclk0    ( clk ),
 	.c0        ( wb_clk ),
+        .c1         ( clk_50M ),
 	.locked    (  )
 );
 assign  cpu_clk  =  wb_clk;
@@ -173,6 +213,24 @@ wire    wb_us_stb_i;
 wire    wb_us_ack_o;
 
 //
+// SDRAM core slave i/f wires
+//
+
+
+
+//sdram0
+wire    [31:0]		wb_sdram0_dat_i;
+wire    [31:0]		wb_sdram0_dat_o;
+wire    [31:0]		wb_sdram0_adr_i;
+wire    [3:0]		wb_sdram0_sel_i;
+wire    wb_sdram0_we_i;
+wire    wb_sdram0_cyc_i;
+wire    wb_sdram0_stb_i;
+wire    wb_sdram0_ack_o;
+wire    wb_sdram0_err_o;
+wire    wb_sdram0_rty_o;
+
+//
 // gpio
 //
 wire    [31:0]		wb_gpio_dat_i;
@@ -199,6 +257,7 @@ wire    wb_flash_ack_o;
 wire    wb_flash_err_o;
 wire    wb_flash_rty_o;
 
+/*
 //
 //
 // on_chip memory
@@ -212,7 +271,7 @@ wire    wb_ocm_we_i;
 wire    wb_ocm_stb_i;
 wire    wb_ocm_ack_o;
 wire    wb_ocm_err_o;
-
+*/
 
 //////////////////////////////////////////////////////////////////////////////////////////
 wire    [31:0] wb_rim_adr_o_flash_prefix;
@@ -361,7 +420,7 @@ or1200_top or1200_top_inst (
 	.pic_ints_i	       ( pic_ints )
 );
 
-
+/*
 //on_chip_ram:
 on_chip_ram_top on_chip_ram_top_inst(
 	.wb_clk_i              ( wb_clk ),
@@ -378,7 +437,7 @@ on_chip_ram_top on_chip_ram_top_inst(
 	.wb_sel_i              ( wb_ocm_sel_i ),
 	.wb_err_o              ( wb_ocm_err_o )
 );
-
+*/
 //
 // Instantiation of the UART16550
 //uart0
@@ -437,6 +496,42 @@ gpio_top gpio_top_inst(
 	.ext_pad_o	       ( gpio_out ),
 	.ext_padoe_o	   	   ( gpio_oe )
 );
+
+
+//sdram0
+yadmc 	sdram0(
+	.sys_clk   (wb_clk),
+	.sys_rst   (wb_rst),
+	
+	.wb_adr_i  (wb_sdram0_adr_i),
+	.wb_dat_i  (wb_sdram0_dat_i),
+	.wb_dat_o  (wb_sdram0_dat_o),
+	.wb_sel_i  (wb_sdram0_sel_i),
+	.wb_cyc_i  (wb_sdram0_cyc_i),
+	.wb_stb_i  (wb_sdram0_stb_i),
+	.wb_we_i   (wb_sdram0_we_i),
+	.wb_ack_o  (wb_sdram0_ack_o),
+	
+	/* SDRAM interface */
+	.sdram_clk (clk_50M),
+	.sdram_cke (sdram0_cke),
+	.sdram_cs_n(sdram0_cs_n),
+	.sdram_we_n(sdram0_we_n),
+	.sdram_cas_n   (sdram0_cas_n),
+	.sdram_ras_n   (sdram0_ras_n),
+	.sdram_dqm     (sdram0_dqm),
+	.sdram_adr     (sdram0_addr),
+	.sdram_ba      (sdram0_ba),
+	.sdram_dq_in   (sdram0_dq_in),
+	.sdram_dq_out  (sdram0_dq_out),
+	.sdram_dq_drive_n  (sdram0_dq_drive_n)
+);
+
+assign  sdram0_dq_in  =  sdram0_dq;
+assign  sdram0_dq     =  sdram0_dq_drive_n ? 16'hzzzz :sdram0_dq_out;
+
+assign  sdram0_clk =  clk_50M;
+
 
 /*  		m0--OR1200 Instruction Master 
 		m1--OR1200 Data Master
@@ -543,7 +638,7 @@ wb_conmax_top	wb_conmax_top_inst(
 	.m7_ack_o	   (  ), 
 	.m7_err_o	   (  ), 
 	.m7_rty_o	   (  ),
-	
+/*	
 	// Slave 0 Interface -- on_chip mem
 	.s0_data_i	   ( wb_ocm_dat_o ),
 	.s0_data_o	   ( wb_ocm_dat_i ),
@@ -553,6 +648,18 @@ wb_conmax_top	wb_conmax_top_inst(
 	.s0_cyc_o	   ( wb_ocm_cyc_i ),
 	.s0_stb_o	   ( wb_ocm_stb_i ), 
 	.s0_ack_i	   ( wb_ocm_ack_o ), 
+	.s0_err_i	   ( 1'b0 ), 
+	.s0_rty_i	   ( 1'b0 ),
+*/        
+	// Slave 0 Interface -- SDRAM0 slave0
+	.s0_data_i	   ( wb_sdram0_dat_o ),
+	.s0_data_o	   ( wb_sdram0_dat_i ),
+	.s0_addr_o	   ( wb_sdram0_adr_i ),
+	.s0_sel_o	   ( wb_sdram0_sel_i ),
+	.s0_we_o	   ( wb_sdram0_we_i ), 
+	.s0_cyc_o	   ( wb_sdram0_cyc_i ),
+	.s0_stb_o	   ( wb_sdram0_stb_i ), 
+	.s0_ack_i	   ( wb_sdram0_ack_o ), 
 	.s0_err_i	   ( 1'b0 ), 
 	.s0_rty_i	   ( 1'b0 ),
 	

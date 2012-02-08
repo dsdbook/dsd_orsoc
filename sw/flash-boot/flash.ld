@@ -1,7 +1,7 @@
 MEMORY
         {
         flash   : ORIGIN = 0xF0000000, LENGTH = 0x00800000
-	    ram	    : ORIGIN = 0x00000000, LENGTH = 0x00008000
+	ram	: ORIGIN = 0x00000000, LENGTH = 0x02000000
         }
  
 SECTIONS

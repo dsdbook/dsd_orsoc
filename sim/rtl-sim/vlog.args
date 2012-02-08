@@ -22,15 +22,17 @@
 
 -y ../bench
 -y ../model/flash
+-y ../model/sdram
 
 -y ../../rtl/top
 -y ../../rtl/or1200
 -y ../../rtl/gpio
 -y ../../rtl/wb_conmax
 -y ../../rtl/pll
--y ../../rtl/on_chip_ram
+//-y ../../rtl/on_chip_ram
 -y ../../rtl/uart16550
 -y ../../rtl/wb_flash_if
+-y ../../rtl/yadmc
 
 //
 // Test bench files
@@ -147,9 +149,18 @@
 ../../rtl/or1200/or1200_fpu.v
 ../../rtl/or1200/or1200_spram.v
 
+//yadmc
++incdir+../../rtl/yadmc
+../../rtl/yadmc/yadmc.v
+../../rtl/yadmc/yadmc_dpram.v
+../../rtl/yadmc/yadmc_spram.v
+../../rtl/yadmc/yadmc_sdram16.v
+../../rtl/yadmc/yadmc_sync.v
 
 //flash ,sdram model
 ../model/flash/s29gl064a_r3_r4.v
+
+../model/sdram/mt48lc16m16a2.v
 
 //
 // Library files
