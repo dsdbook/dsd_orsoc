@@ -124,6 +124,18 @@ wire    wb_gpio_ack_o;
 wire    wb_gpio_err_o;
 
 //
+// wb_demo
+//
+wire    [31:0]		wb_wbdemo_dat_i;
+wire    [31:0]		wb_wbdemo_dat_o;
+wire    [31:0]		wb_wbdemo_adr_i;
+wire    [3:0]		wb_wbdemo_sel_i;
+wire    wb_wbdemo_cyc_i;
+wire    wb_wbdemo_we_i;
+wire    wb_wbdemo_stb_i;
+wire    wb_wbdemo_ack_o;
+
+//
 // on_chip memory
 //
 wire    [31:0]		wb_ocm_dat_i;
@@ -242,6 +254,18 @@ on_chip_ram_top on_chip_ram_top_inst(
 	.wb_err_o              ( wb_ocm_err_o )
 );
 
+wb_demo wb_demo_inst(
+	.wb_clk_i  (wb_clk),
+	.wb_rst_i  (wb_rst),
+	.wb_stb_i  (wb_wbdemo_stb_i),
+	.wb_cyc_i  (wb_wbdemo_cyc_i),
+	.wb_dat_i  (wb_wbdemo_dat_i),
+	.wb_dat_o  (wb_wbdemo_dat_o),
+	.wb_adr_i  (wb_wbdemo_adr_i[4:0]),
+	.wb_we_i   (wb_wbdemo_we_i),
+	.wb_ack_o  (wb_wbdemo_ack_o),
+	.wb_sel_i  (wb_wbdemo_sel_i)
+);
 
 //
 // Instantiation of the GPIO
@@ -444,17 +468,17 @@ wb_conmax_top	wb_conmax_top_inst(
 	.s5_err_i	   ( 1'b0 ), 
 	.s5_rty_i	   ( 1'b0 ),			
 	
-	// Slave 6 Interface
-	.s6_data_i	   ( 32'h0000_0000 ),
-	.s6_data_o	   (  ),
-	.s6_addr_o	   (  ),
-	.s6_sel_o	   (  ),
-	.s6_we_o	   (  ), 
-	.s6_cyc_o	   (  ),
-	.s6_stb_o	   (  ), 
-	.s6_ack_i	   ( 1'b0 ), 
+	// Slave 6 Interface	/*--wb_demo--*/
+	.s6_data_i	   ( wb_wbdemo_dat_o ),
+	.s6_data_o	   ( wb_wbdemo_dat_i ),
+	.s6_addr_o	   ( wb_wbdemo_adr_i ),
+	.s6_sel_o	   ( wb_wbdemo_sel_i ),
+	.s6_we_o	   ( wb_wbdemo_we_i ), 
+	.s6_cyc_o	   ( wb_wbdemo_cyc_i ),
+	.s6_stb_o	   ( wb_wbdemo_stb_i ), 
+	.s6_ack_i	   ( wb_wbdemo_ack_o ), 
 	.s6_err_i	   ( 1'b0 ), 
-	.s6_rty_i	   ( 1'b0 ),			
+	.s6_rty_i	   ( 1'b0 ),
 	
 	// Slave 7 Interface
 	.s7_data_i	   ( 32'h0000_0000 ),

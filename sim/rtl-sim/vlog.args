@@ -25,6 +25,7 @@
 -y ../../rtl/wb_conmax
 -y ../../rtl/pll
 -y ../../rtl/on_chip_ram
+-y ../../rtl/wb_demo
 
 //
 // Test bench files
@@ -40,6 +41,13 @@
 +incdir+../../rtl/gpio
 ../../rtl/gpio/gpio_top.v
 ../../rtl/gpio/gpio_defines.v
+
+//
+// RTL files (wb_demo)
+//
++incdir+../../rtl/wb_demo
+../../rtl/wb_demo/wb_demo.v
+../../rtl/wb_demo/demo.v
 
 //
 // RTL files (top)
