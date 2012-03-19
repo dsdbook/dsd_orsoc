@@ -6,7 +6,6 @@ export NOVAS_INST_DIR=/opt/spring/verdi
 
 (1) Modelsim/Questa
 Simulation : target --> FPGA 
-	ln -sf vlog.arg.fpga  vlog.args
 	./run_vsim
 
 (2) debug using verdi :
